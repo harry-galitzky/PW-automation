@@ -1,14 +1,9 @@
 import { Page, expect } from '@playwright/test';
-
-interface UserData {
-    userName: string;
-    creditCard: string;
-}
-
+import { FakeUser } from '../../../utilities/interfaces';
 export default class ConfirmationPage {
     constructor(private page: Page) {}
 
-    public async verifyConfirmation(userData: UserData, productPrice: number): Promise<void> {
+    public async verifyConfirmation(userData: FakeUser, productPrice: number): Promise<void> {
         await this.page.waitForSelector('.sweet-alert.visible');
         await expect(this.page.locator('.sweet-alert.visible h2')).toHaveText('Thank you for your purchase!');
         

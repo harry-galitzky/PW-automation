@@ -1,18 +1,11 @@
 import { Page } from '@playwright/test';
+import { FakeUser } from '../../../utilities/interfaces';
 
-interface UserData {
-    userName: string;
-    country: string;
-    city: string;
-    creditCard: string;
-    month: string;
-    year: string;
-}
 
 export default class OrderPage {
     constructor(private page: Page) {}
 
-    public async fillOrderForm(userData: UserData): Promise<void> {
+    public async fillOrderForm(userData: FakeUser): Promise<void> {
         await this.page.waitForSelector('#orderModal');
         await this.page.fill('#name', userData.userName);
         await this.page.fill('#country', userData.country);
