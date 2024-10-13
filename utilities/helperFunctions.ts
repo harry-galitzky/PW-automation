@@ -1,6 +1,5 @@
 import { Page, expect } from '@playwright/test';
 
-
 export default class HelperFunctions {
 
     public static async acceptDialog(page: Page): Promise<string> {
@@ -8,36 +7,28 @@ export default class HelperFunctions {
         const message = dialog.message();
         await dialog.accept();
         return message;
-    };
-
-    public static async handleHtmlModal(page: Page, modalSelector: string, actionButtonSelector?: string): Promise<string> {
-    // המתן להופעת המודל
-    await page.waitForSelector(modalSelector, { state: 'visible' });
-
-    // שלוף את תוכן הטקסט של המודל
-    const modalMessage = await page.locator(modalSelector).textContent();
-    
-    // אם יש כפתור אישור במודל, לחץ עליו
-    if (actionButtonSelector) {
-        await page.click(actionButtonSelector);
     }
 
-    // החזר את תוכן ההודעה
-    return modalMessage?.trim() ?? '';
-}
+    public static async handleHtmlModal(page: Page, modalSelector: string, actionButtonSelector?: string): Promise<string> {
+        await page.waitForSelector(modalSelector, { state: 'visible' });
+        const modalMessage = await page.locator(modalSelector).textContent();
+        
+        if (actionButtonSelector) {
+            await page.click(actionButtonSelector);
+        }
 
-    
+        return modalMessage?.trim() ?? '';
+    }
 
     public static getRandomIndex(length: number): number {
         return Math.floor(Math.random() * length);
-    };    
+    }
 
-    public static async validatePageUrl(page: Page, expectedUrl: string) {
+    public static async validatePageUrl(page: Page, expectedUrl: string): Promise<void> {
         await expect(page).toHaveURL(expectedUrl);
-    };
+    }
 
-    public static async validateTitle(page: Page, expectedTitle: string) {
+    public static async validateTitle(page: Page, expectedTitle: string): Promise<void> {
         await expect(page).toHaveTitle(expectedTitle);
-    };
-    
-};
+    }
+}

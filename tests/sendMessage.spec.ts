@@ -1,10 +1,8 @@
 import { test, expect } from "@playwright/test";
-
 import TestData from "../utilities/testData";
 import HomePage from "../src/pages/home/homePage";
 
-
-const contact = 'a.nav-link[data-target="#exampleModal"]'
+const contact = 'a.nav-link[data-target="#exampleModal"]';
 
 test('Send a message to Contact', async ({ page }) => {
     const homePage = new HomePage(page);
@@ -14,7 +12,6 @@ test('Send a message to Contact', async ({ page }) => {
     await expect(page.locator(contact)).toBeVisible();
 
     await page.locator('#recipient-email').fill(TestData.fakeUser.email);
-    
     await page.getByLabel('Contact Email:').fill(TestData.fakeUser.userName);
     await page.getByLabel('Message:').fill(TestData.fakeUser.message);
 

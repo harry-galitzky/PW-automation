@@ -1,8 +1,6 @@
 import { test, expect } from '@playwright/test';
-
 import HomePage from '../src/pages/home/homePage';
 import TestData from '../utilities/testData';
- 
 
 test('Filter products by category', async ({ page }) => {
     const homePage = new HomePage(page);
@@ -12,7 +10,7 @@ test('Filter products by category', async ({ page }) => {
         await homePage.filterByCategory(category);
         await page.waitForTimeout(2000);
     
-        const visibleProducts = (await page.locator('.card-title a.hrefch').allTextContents()).map(product => product.trim());
+        const visibleProducts: string[] = (await page.locator('.card-title a.hrefch').allTextContents()).map(product => product.trim());
     
         for (const visibleProduct of visibleProducts) {
             expect(productList.includes(visibleProduct)).toBeTruthy();
@@ -22,6 +20,6 @@ test('Filter products by category', async ({ page }) => {
             expect(visibleProducts.includes(product)).toBeTruthy();
         }
     }
+    
     await page.close();
-
 });
